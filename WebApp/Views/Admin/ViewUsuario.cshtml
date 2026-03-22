@@ -1,0 +1,258 @@
+@model WebApp.Models.Usuario
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = $"Perfil Usuario";
+}
+
+<style>
+    /* Estilos para las tabs personalizadas azules */
+    .custom-nav-tabs {
+        border-bottom: 1px solid #e2e8f0;
+        gap: 2rem;
+    }
+    .custom-nav-tabs .nav-link {
+        color: #64748b;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 0.5rem 0;
+        font-weight: 500;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+    .custom-nav-tabs .nav-link:hover {
+        color: #3b82f6;
+    }
+    .custom-nav-tabs .nav-link.active {
+        color: #2563eb;
+        border-bottom: 3px solid #2563eb;
+        background: transparent;
+    }
+    
+    .info-label {
+        font-size: 0.8rem;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.2rem;
+        font-weight: 600;
+    }
+    .info-value {
+        font-weight: 500;
+        color: #1e293b;
+    }
+</style>
+
+<div class="mb-4">
+    <h1 class="fw-bold mb-4">Perfil Usuario</h1>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+    
+            <div class="d-flex align-items-center justify-content-between mb-5 pb-4 border-bottom">
+                
+                <div class="d-flex align-items-center">
+       
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex justify-content-center align-items-center me-4" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                        <i class="bi bi-person"></i>
+                    </div>
+                
+          
+                    <div class="d-flex flex-column">
+                        <h3 class="mb-1">
+                            <span class="fw-bold text-dark">@Model.PrimerApellido @Model.SegundoApellido</span>, 
+                            <span class="fw-normal text-muted">@Model.NombreCompleto</span>
+                        </h3>
+                        <div class="text-muted mt-2 d-flex flex-column gap-1">
+                            <div><i class="bi bi-briefcase me-2 text-primary"></i> <span class="fw-medium">@Model.Cargo</span></div>
+                            <div><i class="bi bi-geo-alt me-2 text-primary"></i> <span>@Model.Sede</span></div>
+                        </div>
+                    </div>
+                </div>
+
+       
+                <div>
+                    @if (Model.Estado == WebApp.Models.Enums.EstadoUsuario.Activo)
+                    {
+                        <span class="badge bg-success bg-opacity-10 text-success px-4 py-2 rounded-pill fs-6 fw-bold border border-success border-opacity-25 shadow-sm">
+                            <i class="bi bi-check-circle-fill me-1"></i> Activo
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger bg-opacity-10 text-danger px-4 py-2 rounded-pill fs-6 fw-bold border border-danger border-opacity-25 shadow-sm">
+                            <i class="bi bi-x-circle-fill me-1"></i> Inactivo
+                        </span>
+                    }
+                </div>
+            </div>
+
+
+            <ul class="nav custom-nav-tabs mb-4 px-2" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab">
+                        <span class="text-primary fw-bold">Información básica</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="resp-tab" data-bs-toggle="tab" data-bs-target="#resp" type="button" role="tab" style="color:#64748b;">
+                        Responsabilidades
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="hist-tab" data-bs-toggle="tab" data-bs-target="#hist" type="button" role="tab" style="color:#64748b;">
+                        Historial de responsabilidades
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content px-2" id="profileTabsContent">
+      
+                <div class="tab-pane fade show active" id="basic" role="tabpanel" tabindex="0">
+       
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="info-label">Nombre Completo</div>
+                            <div class="info-value">@Model.NombreCompleto</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Primer Apellido</div>
+                            <div class="info-value">@Model.PrimerApellido</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Segundo Apellido</div>
+                            <div class="info-value">@Model.SegundoApellido</div>
+                        </div>
+                    </div>
+                
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="info-label">Tipo Documento</div>
+                            <div class="info-value">@Model.TipoDocumento.ToString()</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Número Documento</div>
+                            <div class="info-value">@Model.NumeroDocumento</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Fecha Nacimiento</div>
+                            <div class="info-value">@(Model.FechaNacimiento?.ToString("dd/MM/yyyy") ?? "-")</div>
+                        </div>
+                    </div>
+          
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="info-label">Nacionalidad</div>
+                            <div class="info-value">@Model.Nacionalidad</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Género</div>
+                            <div class="info-value">@Model.Genero.ToString()</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Correo Electrónico Principal</div>
+                            <div class="info-value">@(Model.Contacto?.CorreoPrincipal ?? "-")</div>
+                        </div>
+                    </div>
+            
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="info-label">Correo Electrónico Secundario</div>
+                            <div class="info-value">@(Model.Contacto?.CorreoSecundario ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Teléfono Móvil</div>
+                            <div class="info-value">@(Model.Contacto?.TelefonoMovil ?? "-")</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Teléfono Secundario</div>
+                            <div class="info-value">@(Model.Contacto?.TelefonoSecundario ?? "-")</div>
+                        </div>
+                    </div>
+                  
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="info-label">Tipo de Contratación</div>
+                            <div class="info-value">@Model.TipoContratacion.ToString()</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Fecha de Contratación</div>
+                            <div class="info-value">@(Model.FechaContratacion?.ToString("dd/MM/yyyy") ?? "-")</div>
+                        </div>
+                    </div>
+                </div>
+
+   
+                <div class="tab-pane fade" id="resp" role="tabpanel" tabindex="0">
+                    <h5 class="fw-bold mb-4">Responsabilidades Actuales</h5>
+                    <div class="text-muted">
+                        @if (Model.HistorialResponsabilidades != null && Model.HistorialResponsabilidades.Any(h => h.Activo && h.FechaFin == null))
+                        {
+                            <ul class="list-group list-group-flush border-0">
+                                @foreach(var hist in Model.HistorialResponsabilidades.Where(h => h.Activo && h.FechaFin == null))
+                                {
+                                    <li class="list-group-item px-0 border-bottom">
+                                        <div class="d-flex align-items-center py-2">
+                                            <i class="bi bi-check-circle-fill text-primary me-3 fs-5"></i>
+                                            <div>
+                                                <div class="fw-bold text-dark">@(hist.Responsabilidad?.Nombre ?? "N/A")</div>
+                                                <small class="text-muted">Asignado el: @hist.FechaInicio.ToString("dd MMM yyyy")</small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <div class="alert alert-light text-center py-4 rounded-4 border">
+                                <i class="bi bi-inbox fs-1 text-muted d-block mb-2"></i>
+                                No tiene responsabilidades activas asignadas.
+                            </div>
+                        }
+                    </div>
+                </div>
+
+   
+                <div class="tab-pane fade" id="hist" role="tabpanel" tabindex="0">
+                    <h5 class="fw-bold mb-4">Historial General</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-muted fw-semibold border-0">Responsabilidad</th>
+                                    <th class="text-muted fw-semibold border-0">Inicio</th>
+                                    <th class="text-muted fw-semibold border-0">Fin</th>
+                                    <th class="text-muted fw-semibold border-0">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                @if (Model.HistorialResponsabilidades != null && Model.HistorialResponsabilidades.Any())
+                                {
+                                    @foreach(var hist in Model.HistorialResponsabilidades.OrderByDescending(h => h.FechaInicio))
+                                    {
+                                        <tr>
+                                            <td class="fw-medium text-dark">@(hist.Responsabilidad?.Nombre ?? "N/A")</td>
+                                            <td class="text-muted">@hist.FechaInicio.ToString("dd/MM/yyyy")</td>
+                                            <td class="text-muted">@(hist.FechaFin?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                            <td>
+                                                @if(hist.Activo)
+                                                {<span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold">Vigente</span>}
+                                                else
+                                                {<span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill fw-bold">Cerrado</span>}
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="4" class="text-center text-muted py-4">Sin registros históricos</td></tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

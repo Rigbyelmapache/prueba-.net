@@ -1,0 +1,43 @@
+<!-- Sistema Global de Notificaciones (Toasts) con SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            background: '#ffffff',
+            color: '#1e293b',
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+
+      
+        @if (TempData["ToastMessage"] != null)
+        {
+            <text>
+            Toast.fire({
+                icon: '@(TempData["ToastIcon"] ?? "success")',
+                title: '@Html.Raw(TempData["ToastMessage"])'
+            });
+            </text>
+        }
+        
+     
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('expired')) {
+            Toast.fire({
+                icon: 'info',
+                title: 'Su sesión ha expirado debido a inactividad. Por favor, inicie sesión nuevamente.'
+            });
+            
+     
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({path:newUrl}, '', newUrl);
+        }
+    });
+</script>

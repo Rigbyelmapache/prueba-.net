@@ -1,0 +1,59 @@
+@{
+    Layout = "_AuthLayout";
+    ViewData["Title"] = "Iniciar Sesión";
+    
+    // prop del form
+    var loginFormProps = new WebApp.Models.Components.FormConfiguration
+    {
+        Title = "Bienvenido a PrebaApp",
+        ActionUrl = "/Auth/LoginPost",
+        Method = "post",
+        Inputs = new List<WebApp.Models.Components.InputConfiguration>
+        {
+            new WebApp.Models.Components.InputConfiguration 
+            { 
+                Name = "Username", 
+                Label = "Usuario", 
+                Type = "text", 
+                Placeholder = "Ingrese su nombre de usuario" 
+            },
+            new WebApp.Models.Components.InputConfiguration 
+            { 
+                Name = "Password", 
+                Label = "Contraseña", 
+                Type = "password", 
+                Placeholder = "*********" 
+            }
+        },
+        Button = new WebApp.Models.Components.ButtonConfiguration
+        {
+            Text = "Ingresar ",
+            Variant = "danger", 
+            Icon = "bi bi-box-arrow-in-right",
+            Type = "submit"
+        }
+    };
+
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger text-center fw-bold shadow-sm rounded-4 mb-4">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+    </div>
+}
+
+<partial name="Partials/_DynamicForm" model="loginFormProps" />
+
+
+<div class="d-flex align-items-center bg-white p-3 mt-4 rounded-4 shadow-lg border-0">
+
+    <div class="me-3">
+        <i class="bi bi-headset text-primary" style="font-size: 2rem;"></i>
+    </div>
+
+    <div>
+        <p class="mb-0 text-dark fw-semibold" style="font-size: 0.95rem;">¿Necesita ayuda?</p>
+        <span class="text-primary fw-bold" style="font-size: 0.9rem; cursor: pointer;">Contacte con el área de soporte</span>
+    </div>
+</div>

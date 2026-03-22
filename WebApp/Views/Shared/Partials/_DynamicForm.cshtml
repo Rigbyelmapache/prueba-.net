@@ -1,0 +1,28 @@
+@using WebApp.Models.Components
+@model FormConfiguration
+
+<div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body p-5">
+        @if (!string.IsNullOrEmpty(Model.Title))
+        {
+            <h3 class="card-title text-center mb-4 fw-bold" style="color: #9A1413;">@Model.Title</h3>
+        }
+        
+        <form action="@Model.ActionUrl" method="@Model.Method">
+            
+     
+            @foreach(var input in Model.Inputs)
+            {
+                <ui-input type="@input.Type" name="@input.Name" label="@input.Label" placeholder="@input.Placeholder" value="@input.Value"></ui-input>
+            }
+
+          
+            <div class="d-grid mt-4 pt-2">
+                <ui-button type="@Model.Button.Type" variant="@Model.Button.Variant" icon="@Model.Button.Icon">
+                    @Model.Button.Text
+                </ui-button>
+            </div>
+            
+        </form>
+    </div>
+</div>

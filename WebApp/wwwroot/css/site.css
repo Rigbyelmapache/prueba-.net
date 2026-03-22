@@ -1,0 +1,88 @@
+:root {
+  --primary-color: #383be9;
+  --secondary-color: #8b5cf6;
+  --bg-color: #fdfdfd;
+  --text-main: #000000;
+  --text-muted: #94a3b8;
+  --card-bg: #1e293b;
+}
+
+.background-l {
+  background-image: url("../images/Illustration.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin-bottom: 60px;
+}
+
+.navbar {
+  background: rgba(30, 41, 59, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.navbar-brand,
+.nav-link {
+  color: var(--text-main) !important;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  border: none;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 8px;
+  padding: 10px 24px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+}
+
+.hero-section {
+  padding: 100px 0;
+  text-align: center;
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #fff, var(--text-muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.feature-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s;
+  height: 100%;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer {
+  background-color: transparent !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-muted) !important;
+}

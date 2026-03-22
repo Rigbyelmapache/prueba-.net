@@ -1,0 +1,63 @@
+@model IEnumerable<WebApp.Models.Usuario>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Directorio de Usuarios";
+    int contador = 1;
+}
+
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Directorio de Usuarios</h2>
+   
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle border-top">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="text-muted fw-semibold text-center border-0" style="width: 50px;">Nº</th>
+                        <th scope="col" class="text-muted fw-semibold border-0">Nombre y Apellido</th>
+                        <th scope="col" class="text-muted fw-semibold border-0">Sede</th>
+                        <th scope="col" class="text-muted fw-semibold text-center border-0">Estado</th>
+                        <th scope="col" class="text-muted fw-semibold text-end border-0">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td class="text-muted text-center fw-bold">@(contador++)</td>
+                            <td>
+                                <div class="fw-bold text-dark">@user.NombreCompleto</div>
+                                <div class="small text-muted">@user.PrimerApellido @user.SegundoApellido</div>
+                            </td>
+                            <td>@(user.Sede ?? "-")</td>
+                            <td class="text-center">
+                                @if (user.Estado == WebApp.Models.Enums.EstadoUsuario.Activo)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold">Activo</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold">Inactivo</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <!-- Vinculado con tu Tag Helper -->
+                                <ui-link href="/Admin/ViewUsuario/@user.Id" class="text-decoration-none">
+                                    <ui-button variant="outline-primary btn-sm" icon="bi bi-eye">Ver información</ui-button>
+                                </ui-link>
+                            </td>
+                        </tr>
+                    }
+                    
+                    @if(!Model.Any()) 
+                    {
+                        <tr><td colspan="5" class="text-center text-muted py-4">No hay usuarios registrados.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
